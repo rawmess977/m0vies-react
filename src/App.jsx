@@ -88,7 +88,7 @@ function App() {
       {/* <div className="pattern" /> */}
       <div className="wrapper">
         <header>
-          <img src="./hero.png" className="Hero Banner" alt="" />
+          <img src="/hero.png" className="Hero Banner" alt="" />
           <h1>
             Find <span className="text-gradient">Movies</span> You'll Enjoy
           </h1>
