@@ -8,6 +8,7 @@ import Spinner from "./components/Spinner";
 const API_BASE_URL = "https://api.themoviedb.org/3";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+import MovieCard from './components/MovieCard';
 
 const API_OPTIONS = {
   method: "GET",
@@ -83,7 +84,8 @@ function App() {
             <ul>
               {
                 moviesList.map((movie)=>(
-                  <p className="text-white" key={movie.id}>{movie.title}</p>
+                  // <p className="text-white" key={movie.id}>{movie.title}</p>
+                  <MovieCard key={movie.id} movie={movie}/>
                 ))
                 
               }
