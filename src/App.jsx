@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import Search from "./components/Search";
 import Spinner from "./components/Spinner";
+import { useDebounce } from "react-use";
 
 const API_BASE_URL = "https://api.themoviedb.org/3";
 
@@ -23,18 +24,21 @@ function App() {
   const [eroorMessage, setErrorMessage] = useState("");
   const [moviesList, setMoviesList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [debounceSearchTerm, setDebounceSearchTerm] = useState('')
+
+  useDebounce(()=>setDebounceSearchTerm(searchTerm),500,[searchTerm])
 
   // useEffect(() => {
   //   // run only when component full load
   // }, []);
 
-  const fetchMovies = async () => {
+  const fetchMovies = async (query = '') => {
     
     setIsLoading(true);
     setErrorMessage('');
 
     try {
-      const endPoint = `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
+      const endPoint = query ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}` : `${API_BASE_URL}/discover/movie?sort_by=popularity.desc}`;
 
       const response = await fetch(endPoint, API_OPTIONS);
 
@@ -62,8 +66,8 @@ function App() {
   };
 
   useEffect(() => {
-    fetchMovies();
-  }, []);
+    fetchMovies(debounceSearchTerm);
+  }, [debounceSearchTerm]);
   return (
     <main>
       <div className="pattern" />
@@ -82,16 +86,14 @@ function App() {
              <Spinner /> 
           ): eroorMessage ? (<p className="text-red-500">{eroorMessage}</p>) :(
             <ul>
-              {
+              {        
                 moviesList.map((movie)=>(
                   // <p className="text-white" key={movie.id}>{movie.title}</p>
                   <MovieCard key={movie.id} movie={movie}/>
                 ))
                 
               }
-              {
-                console.log(moviesList)
-              }
+             
             </ul>
           ) }
         
