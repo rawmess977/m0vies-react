@@ -6,7 +6,7 @@ const MovieCard = ({movie: { title, poster_path, vote_average, original_language
       {/* <p className="text-white" key={id}>{title}</p> */}
 
 
-      <img src={poster_path ? `https://image.tmdb.org/t/p/w500/${poster_path}` : '/no-movie.png'} alt="" />
+      <img src={poster_path ? `https://image.tmdb.org/t/p/w500${poster_path}` : '/no-movie.png'} alt="" />
       
 
         <div className='mt-4'>

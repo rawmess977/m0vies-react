@@ -10,6 +10,7 @@ const API_BASE_URL = "https://api.themoviedb.org/3";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 import MovieCard from './components/MovieCard';
+import { updateSearchCount } from "./appWrite";
 
 const API_OPTIONS = {
   method: "GET",
@@ -54,7 +55,12 @@ function App() {
         return;
       }
 
-      setMoviesList(data.results || [])
+      setMoviesList(data.results || []);
+      
+      if (query && data.results.length > 0){
+        await updateSearchCount(query,data.results[0])
+      }
+
 
    
     } catch (error) {
